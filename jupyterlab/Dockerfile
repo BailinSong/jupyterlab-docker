@@ -5,7 +5,7 @@ RUN apk add --update --virtual=.build-dependencies alpine-sdk nodejs ca-certific
 RUN apk add --update git
 
 # Additional packages for compatability (glibc)
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
   wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-2.30-r0.apk && \
   wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r3/glibc-i18n-2.30-r0.apk && \
   wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r3/glibc-bin-2.30-r0.apk && \
