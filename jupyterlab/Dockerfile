@@ -4,14 +4,6 @@ FROM python:alpine
 RUN apk add --update --virtual=.build-dependencies alpine-sdk nodejs ca-certificates musl-dev gcc python-dev make cmake g++ gfortran libpng-dev freetype-dev libxml2-dev libxslt-dev
 RUN apk add --update git
 
-# Install Jupyter
-RUN pip install jupyter
-RUN pip install ipywidgets
-RUN jupyter nbextension enable --py widgetsnbextension
-
-# Install JupyterLab
-RUN pip install jupyterlab && jupyter serverextension enable --py jupyterlab
-
 # Additional packages for compatability (glibc)
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
   wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-2.30-r0.apk && \
@@ -24,12 +16,19 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/
   ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 # Optional Clean-up
-#  RUN apk del glibc-i18n && \
-#  apk del .build-dependencies && \
-#  rm glibc-2.30-r0.apk glibc-bin-2.30-r0.apk glibc-i18n-2.30-r0.apk && \
-#  rm -rf /var/cache/apk/*
+RUN apk del glibc-i18n && \
+  apk del .build-dependencies && \
+  rm glibc-2.30-r0.apk glibc-bin-2.30-r0.apk glibc-i18n-2.30-r0.apk && \
+  rm -rf /var/cache/apk/*
 
 ENV LANG=C.UTF-8
+# Install Jupyter
+RUN pip install jupyter
+RUN pip install ipywidgets
+RUN jupyter nbextension enable --py widgetsnbextension
+
+# Install JupyterLab
+RUN pip install jupyterlab && jupyter serverextension enable --py jupyterlab
 
 # Install Python Packages & Requirements (Done near end to avoid invalidating cache)
 COPY requirements.txt requirements.txt
