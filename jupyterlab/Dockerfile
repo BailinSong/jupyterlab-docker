@@ -16,10 +16,10 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/
   ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 # Optional Clean-up
-RUN apk del glibc-i18n && \
-  apk del .build-dependencies && \
-  rm glibc-2.30-r0.apk glibc-bin-2.30-r0.apk glibc-i18n-2.30-r0.apk && \
-  rm -rf /var/cache/apk/*
+#RUN apk del glibc-i18n && \
+#  apk del .build-dependencies && \
+#  rm glibc-2.30-r0.apk glibc-bin-2.30-r0.apk glibc-i18n-2.30-r0.apk && \
+#  rm -rf /var/cache/apk/*
 
 ENV LANG=C.UTF-8
 # Install Jupyter
