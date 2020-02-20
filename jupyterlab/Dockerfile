@@ -22,6 +22,10 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 #  rm -rf /var/cache/apk/*
 
 ENV LANG=C.UTF-8
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
 # Install Jupyter
 RUN pip install jupyter
 RUN pip install ipywidgets
@@ -29,10 +33,6 @@ RUN jupyter nbextension enable --py widgetsnbextension
 
 # Install JupyterLab
 RUN pip install jupyterlab && jupyter serverextension enable --py jupyterlab
-
-# Install Python Packages & Requirements (Done near end to avoid invalidating cache)
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
 
 # Expose Jupyter port & cmd
 EXPOSE 8888
